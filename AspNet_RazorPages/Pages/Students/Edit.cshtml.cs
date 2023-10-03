@@ -1,72 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using AspNet_RazorPages.Entities;
-using AspNet_RazorPages.Data;
+using AspNet_RazorPages.Interfaces.Services;
+using AspNet_RazorPages.ViewModels.Students;
+using AspNet_RazorPages.Extensions;
 
 namespace AspNet_RazorPages.Pages.Students
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IStudentService _service;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(IStudentService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [BindProperty]
-        public Student Student { get; set; } = default!;
+        public EditStudentViewModel EditViewModel { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Students == null)
-            {
-                return NotFound();
-            }
+            var readViewModel = await _service.GetByIdAsync(id);
+            if (readViewModel is null) return NotFound();
 
-            var student =  await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-            Student = student;
+            EditViewModel = readViewModel.MapToEditViewModel();
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (!ModelState.IsValid) return Page();
 
-            _context.Attach(Student).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(Student.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _service.EditAsync(EditViewModel);
 
             return RedirectToPage("./Index");
-        }
-
-        private bool StudentExists(int id)
-        {
-          return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

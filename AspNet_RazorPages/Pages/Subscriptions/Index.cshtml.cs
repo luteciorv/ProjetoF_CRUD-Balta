@@ -7,9 +7,9 @@ namespace AspNet_RazorPages.Pages.Subscriptions
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Data.DataContext _context;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(Data.DataContext context)
         {
             _context = context;
         }

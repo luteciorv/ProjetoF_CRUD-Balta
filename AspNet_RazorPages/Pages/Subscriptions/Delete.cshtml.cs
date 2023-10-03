@@ -8,9 +8,9 @@ namespace AspNet_RazorPages.Pages.Subscriptions
 {
     public class DeleteModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Data.DataContext _context;
 
-        public DeleteModel(ApplicationDbContext context)
+        public DeleteModel(Data.DataContext context)
         {
             _context = context;
         }

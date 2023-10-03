@@ -8,9 +8,9 @@ namespace AspNet_RazorPages.Pages.Subscriptions
 {
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Data.DataContext _context;
 
-        public CreateModel(ApplicationDbContext context)
+        public CreateModel(Data.DataContext context)
         {
             _context = context;
         }

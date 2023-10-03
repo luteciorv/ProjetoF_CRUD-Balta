@@ -1,57 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using AspNet_RazorPages.Data;
-using AspNet_RazorPages.Entities;
+using AspNet_RazorPages.ViewModels.Students;
+using AspNet_RazorPages.Interfaces.Services;
+using AspNet_RazorPages.Extensions;
 
 namespace AspNet_RazorPages.Pages.Students
 {
     public class DeleteModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IStudentService _service;
 
-        public DeleteModel(ApplicationDbContext context)
+        public DeleteModel(IStudentService service)
         {
-            _context = context;
+            _service = service;
         }
 
+        public ReadStudentViewModel ReadViewModel { get; set; } = default!;
+        
         [BindProperty]
-      public Student Student { get; set; } = default!;
+        public int Id { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Students == null)
-            {
-                return NotFound();
-            }
+            var readViewModel = await _service.GetByIdAsync(id);
+            if (readViewModel is null) return NotFound();
 
-            var student = await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
+            ReadViewModel = readViewModel.MapToReadViewModel();
 
-            if (student == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                Student = student;
-            }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null || _context.Students == null)
-            {
-                return NotFound();
-            }
-            var student = await _context.Students.FindAsync(id);
-
-            if (student != null)
-            {
-                Student = student;
-                _context.Students.Remove(Student);
-                await _context.SaveChangesAsync();
-            }
+            await _service.DeleteAsync(id);
 
             return RedirectToPage("./Index");
         }

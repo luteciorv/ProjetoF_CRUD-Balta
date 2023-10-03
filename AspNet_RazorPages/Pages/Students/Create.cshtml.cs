@@ -1,17 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using AspNet_RazorPages.Data;
-using AspNet_RazorPages.Entities;
+using AspNet_RazorPages.Interfaces.Services;
+using AspNet_RazorPages.ViewModels.Students;
 
 namespace AspNet_RazorPages.Pages.Students
 {
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        [BindProperty]
+        public CreateStudentViewModel ViewModel { get; set; } = default!;
 
-        public CreateModel(ApplicationDbContext context)
+        private readonly IStudentService _service;
+
+        public CreateModel(IStudentService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public IActionResult OnGet()
@@ -19,20 +22,11 @@ namespace AspNet_RazorPages.Pages.Students
             return Page();
         }
 
-        [BindProperty]
-        public Student Student { get; set; } = default!;
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Students == null || Student == null)
-            {
-                return Page();
-            }
+            if (!ModelState.IsValid) return Page();
 
-            _context.Students.Add(Student);
-            await _context.SaveChangesAsync();
+            await _service.CreateAsync(ViewModel);
 
             return RedirectToPage("./Index");
         }

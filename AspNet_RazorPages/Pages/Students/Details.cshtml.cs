@@ -1,38 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using AspNet_RazorPages.Data;
-using AspNet_RazorPages.Entities;
+using AspNet_RazorPages.Interfaces.Services;
+using AspNet_RazorPages.ViewModels.Students;
 
 namespace AspNet_RazorPages.Pages.Students
 {
     public class DetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IStudentService _service;
 
-        public DetailsModel(ApplicationDbContext context)
+        public DetailsModel(IStudentService service)
         {
-            _context = context;
+            _service = service;
         }
 
-      public Student Student { get; set; } = default!; 
+      public DetailStudentViewModel ViewModel { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.Students == null)
-            {
-                return NotFound();
-            }
+            var detailViewModel = await _service.GetByIdAsync(id);
+            if (detailViewModel is null) return NotFound();
 
-            var student = await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                Student = student;
-            }
+            ViewModel = detailViewModel;
+
             return Page();
         }
     }

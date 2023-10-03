@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AspNet_RazorPages.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(Data.DataContext))]
     [Migration("20231003130253_InitialMigration")]
     partial class InitialMigration
     {

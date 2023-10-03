@@ -1,27 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using AspNet_RazorPages.Data;
-using AspNet_RazorPages.Entities;
+using AspNet_RazorPages.ViewModels.Students;
+using AspNet_RazorPages.Interfaces.Services;
+using AspNet_RazorPages.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNet_RazorPages.Pages.Students
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IStudentService _service;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(IStudentService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        public IList<Student> Student { get;set; } = default!;
+        public IReadOnlyCollection<ReadStudentViewModel> ReadViewModels { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (_context.Students != null)
-            {
-                Student = await _context.Students.ToListAsync();
-            }
+            var detailViewModels = await _service.GetAllAsync();
+            ReadViewModels = detailViewModels.Select(vm => vm.MapToReadViewModel()).ToArray();
+
+            return Page();
         }
     }
 }
