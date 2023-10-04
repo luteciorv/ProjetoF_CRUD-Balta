@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using AspNet_RazorPages.Interfaces.Services;
-using AspNet_RazorPages.ViewModels.Students;
+using ProjetoF.Application.Interfaces;
+using ProjetoF.Application.Extensions;
 
 namespace AspNet_RazorPages.Pages.Students
 {

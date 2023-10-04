@@ -1,11 +1,11 @@
-using AspNet_RazorPages.Extensions;
+using ProjetoF.Application.Extensions;
+using ProjetoF.Infrastructure.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.ConfigureServices();
-builder.Services.ConfigureDatabaseServices(builder.Configuration);
-builder.Services.ConfigureIdentityServices();
+//builder.Services.ConfigureApplicationServices();
+//builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 
 builder.Services.AddRazorPages();
 

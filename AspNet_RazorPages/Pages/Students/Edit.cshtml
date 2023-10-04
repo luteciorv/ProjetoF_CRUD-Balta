@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:guid}"
 @model AspNet_RazorPages.Pages.Students.EditModel
 
 @{
@@ -13,7 +13,7 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="EditViewModel.Id" class="form-control" />
+            <input type="hidden" name="id" asp-for="@RouteData.Values["id"]" class="form-control" />
 
             <div class="form-group">
                 <label asp-for="EditViewModel.Name" class="control-label"></label>

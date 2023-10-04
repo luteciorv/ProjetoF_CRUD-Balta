@@ -21,4 +21,8 @@
 		<ProjectReference Include="..\ProjetoF.Application\ProjetoF.Application.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Persistence\Data\Migrations\" />
+	</ItemGroup>
+
 </Project>
