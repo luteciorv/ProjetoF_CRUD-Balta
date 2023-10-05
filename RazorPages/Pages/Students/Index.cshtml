@@ -1,0 +1,41 @@
+﻿@page
+@model RazorPages.Pages.Students.IndexModel
+
+@{
+    ViewData["Title"] = "Alunos";
+}
+
+<h1>Alunos</h1>
+
+<p>
+    <a asp-page="Create">Cadastrar novo aluno</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th style="text-align: center;">Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.ViewModels)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+
+                <td style="text-align: center;">
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
