@@ -5,32 +5,27 @@ using ProjetoF.Application.Notifications;
 using ProjetoF.Application.Students.Commands;
 using ProjetoF.Domain.Interfaces.Repositories;
 
-namespace ProjetoF.Application.Students.CommandsHandler
+namespace ProjetoF.Application.Students.CommandsHandler;
+
+public class DeleteStudentCommandHandler : CommandHandlerBase<DeleteStudentCommand>, IRequestHandler<DeleteStudentCommand>
 {
-    public class DeleteStudentCommandHandler : CommandHandlerBase<DeleteStudentCommand>, IRequestHandler<DeleteStudentCommand>
+    public DeleteStudentCommandHandler(
+        IValidator<DeleteStudentCommand> validator,
+        IPublisher publisher,
+        NotificationHandler notificationHandler,
+        IUnitOfWork unitOfWork
+    ) : base(validator, publisher, notificationHandler, unitOfWork)
+    { }
+
+    public async Task Handle(DeleteStudentCommand command, CancellationToken cancellationToken)
     {
-        private readonly IStudentRepository _repository;
+        await ValidateAsync(command);
+        if (ValidationFailed()) return;
 
-        public DeleteStudentCommandHandler(
-            IStudentRepository repository,
-            IValidator<DeleteStudentCommand> validator, 
-            IPublisher publisher,
-            NotificationHandler notificationHandler
-        ) : base(validator, publisher, notificationHandler)
-        {
-            _repository = repository;
-        }
+        var student = await UnitOfWork.StudentRepository.GetByIdAsync(command.Id);
+        student!.Delete();
 
-        public async Task Handle(DeleteStudentCommand command, CancellationToken cancellationToken)
-        {
-            await ValidateAsync(command);
-            if (ValidationFailed()) return;
-
-            var student = await _repository.GetByIdAsync(command.Id);
-            student!.Delete();
-
-            _repository.Update(student);
-            await _repository.SaveAsync();
-        }
+        UnitOfWork.StudentRepository.Update(student);
+        await UnitOfWork.SaveAsync();
     }
 }

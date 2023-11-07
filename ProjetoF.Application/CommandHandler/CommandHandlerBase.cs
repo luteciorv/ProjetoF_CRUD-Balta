@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using ProjetoF.Application.Notifications;
+using ProjetoF.Domain.Interfaces.Repositories;
 
 namespace ProjetoF.Application.CommandHandler
 {
@@ -9,15 +10,18 @@ namespace ProjetoF.Application.CommandHandler
         private readonly IValidator<TCommand> _validator;
         private readonly IPublisher _publisher;
         private readonly NotificationHandler _notificationHandler;
+        protected readonly IUnitOfWork UnitOfWork;
 
         protected CommandHandlerBase(
             IValidator<TCommand> validator, 
             IPublisher publisher, 
-            NotificationHandler notificationHandler)
+            NotificationHandler notificationHandler,
+            IUnitOfWork unitOfWork)
         {
             _validator = validator;
             _publisher = publisher;
             _notificationHandler = notificationHandler;
+            UnitOfWork = unitOfWork;
         }
 
         protected async Task ValidateAsync(TCommand command)

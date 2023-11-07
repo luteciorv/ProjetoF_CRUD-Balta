@@ -5,32 +5,27 @@ using ProjetoF.Application.Notifications;
 using ProjetoF.Application.Students.Commands;
 using ProjetoF.Domain.Interfaces.Repositories;
 
-namespace ProjetoF.Application.Students.CommandsHandler
+namespace ProjetoF.Application.Students.CommandsHandler;
+
+public class EditStudentCommandHandler : CommandHandlerBase<EditStudentCommand>, IRequestHandler<EditStudentCommand>
 {
-    public class EditStudentCommandHandler : CommandHandlerBase<EditStudentCommand>, IRequestHandler<EditStudentCommand>
+    public EditStudentCommandHandler(
+        IValidator<EditStudentCommand> validator,
+        IPublisher publisher,
+        NotificationHandler notificationHandler,
+        IUnitOfWork unitOfWork
+    ) : base(validator, publisher, notificationHandler, unitOfWork)
+    { }
+
+    public async Task Handle(EditStudentCommand command, CancellationToken cancellationToken)
     {
-        private readonly IStudentRepository _repository;
+        await ValidateAsync(command);
+        if (ValidationFailed()) return;
 
-        public EditStudentCommandHandler(
-            IStudentRepository repository,
-            IValidator<EditStudentCommand> validator, 
-            IPublisher publisher,
-            NotificationHandler notificationHandler
-        ) : base(validator, publisher, notificationHandler)
-        {
-            _repository = repository;
-        }
+        var student = await UnitOfWork.StudentRepository.GetByIdAsync(command.Id);
+        student!.Update(command.Name);
 
-        public async Task Handle(EditStudentCommand command, CancellationToken cancellationToken)
-        {
-            await ValidateAsync(command);
-            if (ValidationFailed()) return;
-
-            var student = await _repository.GetByIdAsync(command.Id);
-            student!.Update(command.Name);
-
-            _repository.Update(student);
-            await _repository.SaveAsync();
-        }
+        UnitOfWork.StudentRepository.Update(student);
+        await UnitOfWork.SaveAsync();
     }
 }

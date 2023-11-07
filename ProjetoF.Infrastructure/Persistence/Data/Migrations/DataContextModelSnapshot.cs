@@ -241,7 +241,7 @@ namespace ProjetoF.Infrastructure.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("ProjetoF.Domain.Entities.Subscription", b =>
@@ -279,7 +279,7 @@ namespace ProjetoF.Infrastructure.Persistence.Data.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

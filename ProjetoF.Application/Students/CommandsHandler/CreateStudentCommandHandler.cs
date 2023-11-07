@@ -10,17 +10,13 @@ namespace ProjetoF.Application.Students.CommandsHandler
 {
     public class CreateStudentCommandHandler : CommandHandlerBase<CreateStudentCommand>, IRequestHandler<CreateStudentCommand>
     {
-        private readonly IStudentRepository _repository;
-
         public CreateStudentCommandHandler(
-            IStudentRepository studentRepository,
-            IValidator<CreateStudentCommand> validator, 
+            IValidator<CreateStudentCommand> validator,
             IPublisher publisher,
-            NotificationHandler notificationHandler
-        ) : base(validator, publisher, notificationHandler)
-        {
-            _repository = studentRepository;
-        }
+            NotificationHandler notificationHandler,
+            IUnitOfWork unitOfWork
+        ) : base(validator, publisher, notificationHandler, unitOfWork)
+        { }
 
         public async Task Handle(CreateStudentCommand command, CancellationToken cancellationToken)
         {
@@ -29,8 +25,8 @@ namespace ProjetoF.Application.Students.CommandsHandler
 
             var student = command.MapToStudent();
 
-            await _repository.AddAsync(student);
-            await _repository.SaveAsync();
+            await UnitOfWork.StudentRepository.AddAsync(student);
+            await UnitOfWork.SaveAsync();
         }
     }
 }

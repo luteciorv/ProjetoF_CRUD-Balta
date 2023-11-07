@@ -1,11 +1,10 @@
 ﻿using RazorPages.Models;
 using RazorPages.ViewModels.Students;
 
-namespace RazorPages.Extensions
+namespace RazorPages.Extensions;
+
+public static class StudentMap
 {
-    public static class StudentMap
-    {
-        public static ReadStudentViewModel MapToReadViewModel(this Student model) =>
-            new(model.Id, model.Name, model.Email);
-    }
+    public static ReadStudentViewModel MapToReadViewModel(this Student model) =>
+        new(model.Id, model.Name, model.Email, model.Subscriptions.Select(s => s.MapToReadViewModel()).ToArray());
 }

@@ -8,14 +8,14 @@
 <h1>Alunos</h1>
 
 <p>
-    <a asp-page="Create">Cadastrar novo aluno</a>
+    <a asp-page="Create" class="btn btn-outline-primary">Cadastrar novo aluno</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table align-middle mb-0 bg-white shadow">
+    <thead class="bg-light">
         <tr>
-            <th>Código</th>
-            <th>Nome</th>
             <th>E-mail</th>
+            <th>Nome</th>
             <th style="text-align: center;">Ações</th>
         </tr>
     </thead>
@@ -24,18 +24,45 @@
         @foreach (var item in Model.ViewModels)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
 
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
 
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-
                 <td style="text-align: center;">
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Detalhes</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Excluir</a>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-link btn-sm btn-rounded">Editar</a>
+                    <a asp-page="./AddSubscription" asp-route-id="@item.Id" class="btn btn-link btn-sm btn-rounded">Adicionar Assinatura</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-link btn-sm btn-rounded">Detalhes</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-link btn-sm btn-rounded">Desabilitar</a>
                 </td>
             </tr>
+
+            <tr>
+                <td></td>
+                <td colspan="2">
+                    <table class="table table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>Assinatura</th>
+                                <th>Período</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach(var subscription in item.Subscriptions)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => subscription.Title)</td>
+                                    <td>@Html.Raw(subscription.GetPeriod())</td>
+                                    <td><a asp-page="./CancelSubscription" asp-route-id="@subscription.Id" class="btn btn-outline-danger">Cancelar</a></td>
+                                </tr>
+                            }        
+                        </tbody>
+                    </table>
+                </td>    
+            </tr>
+
+            <tr style="background-color: #ECECEC;"><td colspan="3"></td></tr>
         }
     </tbody>
 </table>

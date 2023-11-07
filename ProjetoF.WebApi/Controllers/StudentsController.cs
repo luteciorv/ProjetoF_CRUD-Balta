@@ -5,6 +5,7 @@ using ProjetoF.Application.Notifications;
 using ProjetoF.Application.Students.Commands;
 using ProjetoF.Application.Students.DTOs;
 using ProjetoF.Application.Students.Queries;
+using ProjetoF.Application.Subscriptions.DTOs;
 
 namespace ProjetoF.WebApi.Controllers
 {
@@ -95,6 +96,25 @@ namespace ProjetoF.WebApi.Controllers
             await Sender.Send(command);
 
             if(Success()) return NoContent();
+
+            return BadRequest(GetNotifications());
+        }
+
+        /// <summary>
+        /// Adiciona uma assinatura ao aluno
+        /// </summary>
+        /// <param name="dto">AddSubscriptionDto</param>
+        /// <response code="200">Assinatura criada e associada ao aluno com sucesso</response>
+        /// <response code="400">Dados da assinatura inválidos</response>
+        [HttpPost("assinatura")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] AddSubscriptionDto dto)
+        {
+            var command = dto.MapToAddCommand();
+            await Sender.Send(command);
+
+            if (Success()) return Ok();
 
             return BadRequest(GetNotifications());
         }

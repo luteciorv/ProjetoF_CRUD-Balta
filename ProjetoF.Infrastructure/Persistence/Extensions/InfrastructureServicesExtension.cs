@@ -12,6 +12,8 @@ internal static partial class InfrastructureServicesExtension
     public static void ConfigureRepositoriesServices(this IServiceCollection services)
     {
         services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
     public static void ConfigureDatabaseServices(this IServiceCollection services, IConfiguration configuration)

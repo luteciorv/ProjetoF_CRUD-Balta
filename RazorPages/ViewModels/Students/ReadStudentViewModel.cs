@@ -1,16 +1,5 @@
-﻿namespace RazorPages.ViewModels.Students
-{
-    public class ReadStudentViewModel
-    {
-        public ReadStudentViewModel(Guid id, string name, string email)
-        {
-            Id = id;
-            Name = name;
-            Email = email;
-        }
+﻿using RazorPages.ViewModels.Subscriptions;
 
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public string Email { get; private set; }
-    }
-}
+namespace RazorPages.ViewModels.Students;
+
+public record ReadStudentViewModel(Guid Id, string Name, string Email, IReadOnlyCollection<ReadSubscriptionViewModel> Subscriptions);

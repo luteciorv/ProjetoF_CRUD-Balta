@@ -3,7 +3,6 @@ using ProjetoF.Domain.Entities;
 
 namespace ProjetoF.Domain.Interfaces.Repositories;
 
-public interface IStudentRepository : IRepository<Student>
+public interface ISubscriptionRepository : IRepository<Subscription>
 {
-    Task<Student?> GetByEmailAsync(string email);
 }
