@@ -6,6 +6,7 @@ using ProjetoF.Application.Students.Commands;
 using ProjetoF.Application.Students.DTOs;
 using ProjetoF.Application.Students.Queries;
 using ProjetoF.Application.Subscriptions.DTOs;
+using System.Net;
 
 namespace ProjetoF.WebApi.Controllers
 {
@@ -22,12 +23,12 @@ namespace ProjetoF.WebApi.Controllers
         /// <response code="200">Retorna todos os alunos ativos</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IReadOnlyCollection<ReadStudentDto>>> Get()
+        public async Task<IActionResult> Get()
         {
             var query = new GetStudentsQuery();
-            var response = await Sender.Send(query);
+            var result = await Sender.Send(query);
 
-            return Ok(response);
+            return Response(HttpStatusCode.OK, result);
         }
 
         /// <summary>
@@ -37,13 +38,12 @@ namespace ProjetoF.WebApi.Controllers
         /// <response code="200">Retorna o aluno</response>
         [HttpGet("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ReadStudentDto>> Get([FromRoute] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var query = new GetStudentByIdQuery(id);
-            var response = await Sender.Send(query);
-            if (response is null) return NotFound();
+            var result = await Sender.Send(query);
 
-            return Ok(response);
+            return Response(HttpStatusCode.OK, result);
         }
 
         /// <summary>
@@ -60,9 +60,7 @@ namespace ProjetoF.WebApi.Controllers
             var command = dto.MapToCreateCommand();
             await Sender.Send(command);
 
-            if (Success()) return Ok();
-
-            return BadRequest(GetNotifications());
+            return Response(HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -78,9 +76,7 @@ namespace ProjetoF.WebApi.Controllers
             var command = dto.MapToEditCommand(id);
             await Sender.Send(command);
 
-            if (Success()) return NoContent();
-
-            return BadRequest(GetNotifications());
+            return Response(HttpStatusCode.NoContent);
         }
 
         /// <summary>
@@ -95,9 +91,7 @@ namespace ProjetoF.WebApi.Controllers
             var command = new DisableStudentCommand(id);
             await Sender.Send(command);
 
-            if(Success()) return NoContent();
-
-            return BadRequest(GetNotifications());
+            return Response(HttpStatusCode.NoContent);
         }
 
         /// <summary>
@@ -114,9 +108,7 @@ namespace ProjetoF.WebApi.Controllers
             var command = dto.MapToSubscribeCommand();
             await Sender.Send(command);
 
-            if (Success()) return Ok();
-
-            return BadRequest(GetNotifications());
+            return Response(HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -133,9 +125,7 @@ namespace ProjetoF.WebApi.Controllers
             var command = dto.MapToCancelCommand();
             await Sender.Send(command);
 
-            if (Success()) return Ok();
-
-            return BadRequest(GetNotifications());
+            return Response(HttpStatusCode.NoContent);
         }
     }
 }

@@ -4,13 +4,13 @@ using ProjetoF.Application.CommandHandler;
 using ProjetoF.Application.Extensions;
 using ProjetoF.Application.Notifications;
 using ProjetoF.Application.Subscriptions.Commands;
-using ProjetoF.Domain.Enums;
+using ProjetoF.Domain.Exceptions;
 using ProjetoF.Domain.Interfaces.Repositories;
 
 namespace ProjetoF.Application.Subscriptions.CommandHandlers;
 
 public class SubscribeCommandHandler : CommandHandlerBase<SubscribeCommand>, IRequestHandler<SubscribeCommand>
-{
+{ 
     public SubscribeCommandHandler(
         IValidator<SubscribeCommand> validator,
         IPublisher publisher,
@@ -35,9 +35,9 @@ public class SubscribeCommandHandler : CommandHandlerBase<SubscribeCommand>, IRe
 
             await UnitOfWork.SaveAsync();
         }
-        catch(Exception ex)
+        catch(ExceptionBase ex)
         {
-            await NotifyEventAsync(ENotificationTypes.Error.ToString(), ex.Message);
+            await NotifyEventAsync(ex.Key, ex.Message);
         }
     }
 }

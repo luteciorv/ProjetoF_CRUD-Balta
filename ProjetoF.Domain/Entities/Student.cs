@@ -1,4 +1,6 @@
 ﻿using ProjetoF.Domain.Entities.Subscriptions;
+using ProjetoF.Domain.Exceptions;
+using System.Net;
 
 namespace ProjetoF.Domain.Entities;
 
@@ -25,7 +27,11 @@ public class Student : EntityBase
     
     public void AddSubscription(Subscription subscription)
     {
-        if (Subscriptions.Contains(subscription)) throw new Exception("A assinatura já existe");
+        if (SubscriptionExists(subscription)) 
+            throw new SubscriptionException($"{HttpStatusCode.BadRequest}", "A assinatura já existe", nameof(Student));
+
+        if (IsInvalidPeriod(subscription.StartDate, subscription.EndDate)) 
+            throw new SubscriptionException($"{HttpStatusCode.BadRequest}", "Já existe uma assinatura para o período informado", nameof(Student));
 
         var subscriptions = Subscriptions.ToList();
         subscriptions.Add(subscription);
@@ -36,7 +42,8 @@ public class Student : EntityBase
 
     public void RemoveSubscription(Guid id)
     {
-        var subscription = Subscriptions.FirstOrDefault(s => s.Id == id) ?? throw new Exception("A assinatura informada não existe");
+        var subscription = Subscriptions.FirstOrDefault(s => s.Id == id) 
+            ?? throw new SubscriptionException($"{HttpStatusCode.NotFound}", "A assinatura informada não existe", nameof(Student));
         
         var subscriptions = Subscriptions.ToList();
         subscriptions.Remove(subscription);
@@ -44,4 +51,10 @@ public class Student : EntityBase
         
         Subscriptions = subscriptions;
     }
+
+    public bool SubscriptionExists(Subscription subscription) =>
+        Subscriptions.Contains(subscription) || Subscriptions.Any(s => s.Id == subscription.Id);
+
+    public bool IsInvalidPeriod(DateTime startDate, DateTime endDate) =>
+        Subscriptions.Any(s => s.DatesBehind(startDate, endDate));
 }

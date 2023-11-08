@@ -16,4 +16,7 @@ public class Subscription : EntityBase
 
     public Guid StudentId { get; private set; }
     public Student Student { get; private set; } = null!;
+
+    public bool DatesBehind(DateTime startDate, DateTime endDate) =>
+        startDate >= StartDate && endDate <= EndDate;
 }
