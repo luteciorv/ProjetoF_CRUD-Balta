@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProjetoF.Domain.Constants;
+using ProjetoF.Domain.Enums;
 
-namespace ProjetoF.Domain.Entities.Subscriptions
+namespace ProjetoF.Domain.Entities.Subscriptions;
+
+public class MonthlyPlanSubscription : Subscription
 {
-    public class MonthlyPlanSubscription
-    {
-    }
+    public MonthlyPlanSubscription(DateTime startDate, Guid studentId) 
+        : base(SubscriptionsPlans.MonthlyPlan, startDate, startDate.AddDays((int) ESubscriptionDuration.MonthlyPlan), studentId)
+    {}
 }

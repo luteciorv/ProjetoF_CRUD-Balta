@@ -1,19 +1,18 @@
 ﻿using MediatR;
+using ProjetoF.Domain.Enums;
 
 namespace ProjetoF.Application.Subscriptions.Commands;
 
 public class SubscribeCommand : IRequest
 {
-    public SubscribeCommand(Guid studentId, string title, DateTime startDate, DateTime endDate)
+    public SubscribeCommand(Guid studentId, int plan, DateTime startDate)
     {
         StudentId = studentId;
-        Title = title;
+        Plan = (ESubscriptionPlans) plan;
         StartDate = startDate;
-        EndDate = endDate;
     }
 
     public Guid StudentId { get; private set; }
-    public string Title { get; private set; }
+    public ESubscriptionPlans Plan { get; private set; }
     public DateTime StartDate { get; private set; }
-    public DateTime EndDate { get; private set; }
 }

@@ -4,6 +4,7 @@ using ProjetoF.Application.CommandHandler;
 using ProjetoF.Application.Extensions;
 using ProjetoF.Application.Notifications;
 using ProjetoF.Application.Subscriptions.Commands;
+using ProjetoF.Domain.Enums;
 using ProjetoF.Domain.Interfaces.Repositories;
 
 namespace ProjetoF.Application.Subscriptions.CommandHandlers;
@@ -25,7 +26,7 @@ public class SubscribeCommandHandler : CommandHandlerBase<SubscribeCommand>, IRe
             await ValidateAsync(command);
             if (ValidationFailed()) return;
 
-            var subscription = command.MapToEntity();
+            var subscription = command.GetCurrentSubscription();
             await UnitOfWork.SubscriptionRepository.AddAsync(subscription);
 
             var student = await UnitOfWork.StudentRepository.GetByIdAsync(command.StudentId);
@@ -36,7 +37,7 @@ public class SubscribeCommandHandler : CommandHandlerBase<SubscribeCommand>, IRe
         }
         catch(Exception ex)
         {
-            await NotifyEventAsync("Error", ex.Message);
+            await NotifyEventAsync(ENotificationTypes.Error.ToString(), ex.Message);
         }
     }
 }
