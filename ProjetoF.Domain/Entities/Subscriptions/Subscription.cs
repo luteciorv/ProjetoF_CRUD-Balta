@@ -1,4 +1,4 @@
-﻿namespace ProjetoF.Domain.Entities;
+﻿namespace ProjetoF.Domain.Entities.Subscriptions;
 
 public class Subscription : EntityBase
 {

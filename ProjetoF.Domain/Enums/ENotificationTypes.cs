@@ -1,8 +1,7 @@
-﻿namespace ProjetoF.Domain.Enums
+﻿namespace ProjetoF.Domain.Enums;
+
+public enum ENotificationTypes
 {
-    public enum ENotificationTypes
-    {
-        Message = 0,
-        Error = 1
-    }
+    Message = 0,
+    Error = 1
 }

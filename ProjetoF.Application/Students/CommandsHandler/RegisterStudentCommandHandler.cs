@@ -8,22 +8,22 @@ using ProjetoF.Domain.Interfaces.Repositories;
 
 namespace ProjetoF.Application.Students.CommandsHandler
 {
-    public class CreateStudentCommandHandler : CommandHandlerBase<CreateStudentCommand>, IRequestHandler<CreateStudentCommand>
+    public class RegisterStudentCommandHandler : CommandHandlerBase<RegisterStudentCommand>, IRequestHandler<RegisterStudentCommand>
     {
-        public CreateStudentCommandHandler(
-            IValidator<CreateStudentCommand> validator,
+        public RegisterStudentCommandHandler(
+            IValidator<RegisterStudentCommand> validator,
             IPublisher publisher,
             NotificationHandler notificationHandler,
             IUnitOfWork unitOfWork
         ) : base(validator, publisher, notificationHandler, unitOfWork)
         { }
 
-        public async Task Handle(CreateStudentCommand command, CancellationToken cancellationToken)
+        public async Task Handle(RegisterStudentCommand command, CancellationToken cancellationToken)
         {
             await ValidateAsync(command);
             if (ValidationFailed()) return;
 
-            var student = command.MapToStudent();
+            var student = command.MapToEntity();
 
             await UnitOfWork.StudentRepository.AddAsync(student);
             await UnitOfWork.SaveAsync();

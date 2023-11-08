@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjetoF.Domain.Entities;
+using ProjetoF.Domain.Entities.Subscriptions;
 
 namespace ProjetoF.Infrastructure.Persistence.Data;
 

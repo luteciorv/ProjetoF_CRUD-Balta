@@ -25,6 +25,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
                     .Where(e => e.Enabled)
                     .FirstOrDefaultAsync(e => e.Id == id);
 
+    public async Task<bool> ExistsAsync(Guid id) =>
+        (await GetByIdAsync(id)) is not null;
+
     public async Task AddAsync(TEntity entity) =>
         await Context.Set<TEntity>().AddAsync(entity);
 
@@ -32,5 +35,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBa
     {
         Context.Entry(entity).State = EntityState.Modified;
         Context.Set<TEntity>().Update(entity);
+    }
+
+    public void Delete(TEntity entity)
+    {
+        Context.Set<TEntity>().Remove(entity);
     }
 }

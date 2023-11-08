@@ -2,9 +2,9 @@
 
 namespace ProjetoF.Application.Subscriptions.Commands;
 
-public class AddSubscriptionCommand : IRequest
+public class SubscribeCommand : IRequest
 {
-    public AddSubscriptionCommand(Guid studentId, string title, DateTime startDate, DateTime endDate)
+    public SubscribeCommand(Guid studentId, string title, DateTime startDate, DateTime endDate)
     {
         StudentId = studentId;
         Title = title;

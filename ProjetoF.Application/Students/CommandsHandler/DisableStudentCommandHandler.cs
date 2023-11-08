@@ -7,17 +7,17 @@ using ProjetoF.Domain.Interfaces.Repositories;
 
 namespace ProjetoF.Application.Students.CommandsHandler;
 
-public class DeleteStudentCommandHandler : CommandHandlerBase<DeleteStudentCommand>, IRequestHandler<DeleteStudentCommand>
+public class DisableStudentCommandHandler : CommandHandlerBase<DisableStudentCommand>, IRequestHandler<DisableStudentCommand>
 {
-    public DeleteStudentCommandHandler(
-        IValidator<DeleteStudentCommand> validator,
+    public DisableStudentCommandHandler(
+        IValidator<DisableStudentCommand> validator,
         IPublisher publisher,
         NotificationHandler notificationHandler,
         IUnitOfWork unitOfWork
     ) : base(validator, publisher, notificationHandler, unitOfWork)
     { }
 
-    public async Task Handle(DeleteStudentCommand command, CancellationToken cancellationToken)
+    public async Task Handle(DisableStudentCommand command, CancellationToken cancellationToken)
     {
         await ValidateAsync(command);
         if (ValidationFailed()) return;

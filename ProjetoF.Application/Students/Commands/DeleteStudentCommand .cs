@@ -1,14 +1,13 @@
 ﻿using MediatR;
 
-namespace ProjetoF.Application.Students.Commands
-{
-    public class DeleteStudentCommand : IRequest
-    {
-        public DeleteStudentCommand(Guid id)
-        {
-            Id = id;
-        }
+namespace ProjetoF.Application.Students.Commands;
 
-        public Guid Id { get; private set; }
+public class DisableStudentCommand : IRequest
+{
+    public DisableStudentCommand(Guid id)
+    {
+        Id = id;
     }
+
+    public Guid Id { get; private set; }
 }

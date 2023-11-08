@@ -4,9 +4,9 @@ using ProjetoF.Domain.Interfaces.Repositories;
 
 namespace ProjetoF.Application.Subscriptions.Validations;
 
-public class AddSubscriptionCommandValidation : AbstractValidator<AddSubscriptionCommand>
+public class SubscribeCommandValidation : AbstractValidator<SubscribeCommand>
 {
-    public AddSubscriptionCommandValidation(IUnitOfWork unitOfWork)
+    public SubscribeCommandValidation(IUnitOfWork unitOfWork)
     {
         RuleFor(s => s.Title)
             .Cascade(CascadeMode.Stop)

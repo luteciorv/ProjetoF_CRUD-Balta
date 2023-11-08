@@ -8,24 +8,24 @@ using ProjetoF.Domain.Interfaces.Repositories;
 
 namespace ProjetoF.Application.Subscriptions.CommandHandlers;
 
-public class AddSubscriptionCommandHandler : CommandHandlerBase<AddSubscriptionCommand>, IRequestHandler<AddSubscriptionCommand>
+public class SubscribeCommandHandler : CommandHandlerBase<SubscribeCommand>, IRequestHandler<SubscribeCommand>
 {
-    public AddSubscriptionCommandHandler(
-        IValidator<AddSubscriptionCommand> validator,
+    public SubscribeCommandHandler(
+        IValidator<SubscribeCommand> validator,
         IPublisher publisher,
         NotificationHandler notificationHandler,
         IUnitOfWork unitOfWork
         ) : base(validator, publisher, notificationHandler, unitOfWork)
     { }
 
-    public async Task Handle(AddSubscriptionCommand command, CancellationToken cancellationToken)
+    public async Task Handle(SubscribeCommand command, CancellationToken cancellationToken)
     {
         try
         {
             await ValidateAsync(command);
             if (ValidationFailed()) return;
 
-            var subscription = command.MapToSubscription();
+            var subscription = command.MapToEntity();
             await UnitOfWork.SubscriptionRepository.AddAsync(subscription);
 
             var student = await UnitOfWork.StudentRepository.GetByIdAsync(command.StudentId);

@@ -1,4 +1,6 @@
-﻿namespace ProjetoF.Domain.Entities;
+﻿using ProjetoF.Domain.Entities.Subscriptions;
+
+namespace ProjetoF.Domain.Entities;
 
 public class Student : EntityBase
 {
@@ -27,15 +29,19 @@ public class Student : EntityBase
 
         var subscriptions = Subscriptions.ToList();
         subscriptions.Add(subscription);
+        UpdatedAt = DateTime.Now;
+
         Subscriptions = subscriptions;
     }
 
-    public void RemoveSubscription(Subscription subscription)
+    public void RemoveSubscription(Guid id)
     {
-        if (!Subscriptions.Contains(subscription)) throw new Exception("A assinatura informada não existe");
-
+        var subscription = Subscriptions.FirstOrDefault(s => s.Id == id) ?? throw new Exception("A assinatura informada não existe");
+        
         var subscriptions = Subscriptions.ToList();
         subscriptions.Remove(subscription);
+        UpdatedAt = DateTime.Now;
+        
         Subscriptions = subscriptions;
     }
 }

@@ -14,12 +14,12 @@ public static class StudentMap
             entity.Subscriptions.Select(s => s.MapToReadDto()).ToArray()
             );
 
-    public static CreateStudentCommand MapToCreateCommand(this CreateStudentDto dto) =>
+    public static RegisterStudentCommand MapToCreateCommand(this RegisterStudentDto dto) =>
         new(dto.Name, dto.Email);
 
     public static EditStudentCommand MapToEditCommand(this EditStudentDto dto, Guid id) =>
         new(id, dto.Name);
 
-    public static Student MapToStudent(this CreateStudentCommand command) =>
+    public static Student MapToEntity(this RegisterStudentCommand command) =>
         new(command.Name, command.Email);
 }

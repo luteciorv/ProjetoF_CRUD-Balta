@@ -55,7 +55,7 @@ namespace ProjetoF.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] CreateStudentDto dto)
+        public async Task<IActionResult> Post([FromBody] RegisterStudentDto dto)
         {
             var command = dto.MapToCreateCommand();
             await Sender.Send(command);
@@ -92,7 +92,7 @@ namespace ProjetoF.WebApi.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            var command = new DeleteStudentCommand(id);
+            var command = new DisableStudentCommand(id);
             await Sender.Send(command);
 
             if(Success()) return NoContent();
@@ -109,9 +109,28 @@ namespace ProjetoF.WebApi.Controllers
         [HttpPost("assinatura")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] AddSubscriptionDto dto)
+        public async Task<IActionResult> Post([FromBody] SubscribeDto dto)
         {
-            var command = dto.MapToAddCommand();
+            var command = dto.MapToSubscribeCommand();
+            await Sender.Send(command);
+
+            if (Success()) return Ok();
+
+            return BadRequest(GetNotifications());
+        }
+
+        /// <summary>
+        /// Remove uma assinatura ao aluno
+        /// </summary>
+        /// <param name="dto">RemoveSubscriptionDto</param>
+        /// <response code="200">Assinatura removida do aluno com sucesso</response>
+        /// <response code="400">Dados da assinatura inválidos</response>
+        [HttpDelete("assinatura")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromBody] CancelSubscriptionDto dto)
+        {
+            var command = dto.MapToCancelCommand();
             await Sender.Send(command);
 
             if (Success()) return Ok();
