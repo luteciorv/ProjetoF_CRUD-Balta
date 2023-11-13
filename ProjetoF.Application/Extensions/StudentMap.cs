@@ -10,7 +10,7 @@ public static class StudentMap
         new(entity.Id, 
             entity.Name, 
             entity.Email, 
-            entity.CreatedAt.ToString("dd/MM/yyyy HH:mm"), 
+            $"{entity.CreatedAt.ToString("dd/MM/yyyy HH:mm")}h", 
             entity.Subscriptions.Select(s => s.MapToReadDto()).ToArray()
             );
 
