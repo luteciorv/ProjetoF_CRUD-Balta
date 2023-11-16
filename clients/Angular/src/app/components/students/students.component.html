@@ -1,0 +1,44 @@
+<h3 class="text-center">Listagem dos alunos cadastrados</h3>
+
+<div class="table-wrapper mb-5" *ngIf="students">
+    <table class="fl-table" *ngFor="let student of students">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>E-mail</th>
+                <th>Nome</th>
+                <th>Cadastrado em</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>{{ student.id }}</td>
+                <td class="fw-bold">{{ student.email }}</td>
+                <td class="fw-bold">{{ student.name }}</td>
+                <td> {{ student.createdAt }}</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="2">
+                    <table class="table table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Assinatura</th>
+                                <th colspan="2">Período</th>
+                            </tr>
+                        </thead>
+            
+                        <tbody>
+                            <tr class="pointer" *ngFor="let subscription of student.subscriptions">
+                                <td colspan="2" class="fw-bold">{{ subscription.title }}</td>
+                                <td colspan="2">{{ subscription.startDate }} - {{ subscription.endDate }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
