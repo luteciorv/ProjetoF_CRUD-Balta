@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RazorMVC.ViewModels.Students.ReadStudentViewModel>
+
+@{
+    ViewData["Title"] = "Alunos";
+}
+
+<h3 class="text-center">Listagem dos alunos cadastrados</h3>
+
+@foreach (var item in Model)
+{
+    <div class="table-wrapper mb-5">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>E-mail</th>
+                    <th>Nome</th>
+                    <th>Cadastrado em</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td class="fw-bold">@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td class="fw-bold">@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">
+                        <table class="table table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Assinatura</th>
+                                    <th colspan="2">Período</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var subscription in item.Subscriptions)
+                                {
+                                    <tr class="pointer">
+                                        <td colspan="2" class="fw-bold">@Html.DisplayFor(modelItem => subscription.Title)</td>
+                                        <td colspan="2">@Html.Raw(subscription.GetPeriod())</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,18 +1,19 @@
-{
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:42945",
-      "sslPort": 44304
+      "applicationUrl": "http://localhost:15162",
+      "sslPort": 44353
     }
   },
   "profiles": {
-    "RazorPages": {
+    "Razor MVC": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7204;http://localhost:5124",
+      "applicationUrl": "https://localhost:7145;http://localhost:5119",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

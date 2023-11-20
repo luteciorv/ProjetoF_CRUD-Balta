@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Clients", "1 - Clients", "{C8CBB93C-839E-4E71-BA32-4060C653DD76}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - API", "1 - API", "{A3D08CB6-36F5-4626-BF82-D8D2F253027E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - API", "2 - API", "{A3D08CB6-36F5-4626-BF82-D8D2F253027E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{CACABCAD-F93F-4B48-BA55-F526E641ED2F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Application", "3 - Application", "{CACABCAD-F93F-4B48-BA55-F526E641ED2F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infrastructure", "3 - Infrastructure", "{CC6B8134-4CBC-4B83-A4CB-6A6FA243705E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infrastructure", "4 - Infrastructure", "{CC6B8134-4CBC-4B83-A4CB-6A6FA243705E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Domain", "5 - Domain", "{7B8A3F41-4C41-40C5-A833-9D76BD5BA15A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Domain", "4 - Domain", "{7B8A3F41-4C41-40C5-A833-9D76BD5BA15A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjetoF.Domain", "src\ProjetoF.Domain\ProjetoF.Domain.csproj", "{496B506C-CA6D-4068-A4FE-F9FC4D324067}"
 EndProject
@@ -20,8 +18,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjetoF.Application", "src\ProjetoF.Application\ProjetoF.Application.csproj", "{B0646061-14FF-45DA-ACA3-540BA16D0915}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjetoF.WebApi", "src\ProjetoF.WebApi\ProjetoF.WebApi.csproj", "{221C47E2-FAB2-43EE-A40D-A3AED18F8F24}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPages", "clients\RazorPages\RazorPages.csproj", "{6405486B-EA7C-477B-8DF2-863B99A80885}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +41,6 @@ Global
 		{221C47E2-FAB2-43EE-A40D-A3AED18F8F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{221C47E2-FAB2-43EE-A40D-A3AED18F8F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{221C47E2-FAB2-43EE-A40D-A3AED18F8F24}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6405486B-EA7C-477B-8DF2-863B99A80885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6405486B-EA7C-477B-8DF2-863B99A80885}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6405486B-EA7C-477B-8DF2-863B99A80885}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6405486B-EA7C-477B-8DF2-863B99A80885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,7 +50,6 @@ Global
 		{2048ABFA-CAF9-4590-BDD6-50256B716418} = {CC6B8134-4CBC-4B83-A4CB-6A6FA243705E}
 		{B0646061-14FF-45DA-ACA3-540BA16D0915} = {CACABCAD-F93F-4B48-BA55-F526E641ED2F}
 		{221C47E2-FAB2-43EE-A40D-A3AED18F8F24} = {A3D08CB6-36F5-4626-BF82-D8D2F253027E}
-		{6405486B-EA7C-477B-8DF2-863B99A80885} = {C8CBB93C-839E-4E71-BA32-4060C653DD76}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9777564C-7B99-42FB-B483-08845513E5DB}

@@ -1,19 +1,13 @@
-﻿using RazorPages.Interfaces;
-using RazorPages.Models;
+﻿using RazorMVC.Interfaces;
+using RazorMVC.Models;
 using Newtonsoft.Json;
 
-namespace RazorPages.Clients
+namespace RazorMVC.Clients
 {
-    public class StudentClient : IStudentClient
+    public class StudentClient(HttpClient httpClient, ILogger<StudentClient> logger) : IStudentClient
     {
-        private readonly HttpClient _httpClient;
-        private readonly ILogger<StudentClient> _logger;
-
-        public StudentClient(HttpClient httpClient, ILogger<StudentClient> logger)
-        {
-            _httpClient = httpClient;
-            _logger = logger;
-        }
+        private readonly HttpClient _httpClient = httpClient;
+        private readonly ILogger<StudentClient> _logger = logger;
 
         public async Task<IReadOnlyCollection<Student>> GetAsync()
         {
